@@ -51,7 +51,7 @@ wordpos = {} #a dictionary of pos distribution
 #functions#
 ###########
 #use utf-8 for stdout
-sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+# sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 
 #compute the association between two words
 def calc_assoc(word1, word2):
@@ -123,7 +123,7 @@ for line in wc_file:
             key = data[1] + "|" + data[0]
         wordcount[key] = int(data[2])
     else:
-        print "ERROR: wordcount format incorrect. Line =", line
+        print("ERROR: wordcount format incorrect. Line =", line)
         raise SystemExit
 
 #get the total number of windows
@@ -140,18 +140,18 @@ for topic_id, line in enumerate(topic_file):
         topic_coherence[topic_id].append(calc_topic_coherence(topic_list[:n]))
 
 #sort the topic coherence scores in terms of topic id
-tc_items = sorted(topic_coherence.items())
+tc_items = list(sorted(topic_coherence.items()))
 mean_coherence_list = []
 for item in tc_items:
     topic_words = topic_tw[item[0]].split()
     mean_coherence = np.mean(item[1])
     mean_coherence_list.append(mean_coherence)
-    print ("[%.2f] (" % mean_coherence),
+    print("[{0:0.2f}] (".format(mean_coherence),end= ' ')
     for i in item[1]:
-        print ("%.2f;" % i),
-    print ")", topic_tw[item[0]]
+        print("{0:0.2f}; ".format(i), end = ' ')
+    print(")", topic_tw[item[0]])
 
 #print the overall topic coherence for all topics
-print "=========================================================================="
-print "Average Topic Coherence = %.3f" % np.mean(mean_coherence_list)
-print "Median Topic Coherence = %.3f" % np.median(mean_coherence_list)
+print("==========================================================================")
+print("Average Topic Coherence = %.3f" % np.mean(mean_coherence_list))
+print("Median Topic Coherence = %.3f" % np.median(mean_coherence_list))
