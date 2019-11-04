@@ -244,8 +244,8 @@ for i, topic_list in enumerate(topics):
                 val = normalize(cp2[target_word][topic_word], cp2_min, cp2_max)
             if debug:
                     print "#P(" + topic_word + "|" + target_word + ")",
-            print str(feature_id) + ":" + str(val),
+            print(str(feature_id) + ":" + str(val),
             feature_id += 1
 
         #comment for the target word
-        print "#" + target_word
+        print("#" + target_word)

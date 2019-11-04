@@ -1,6 +1,13 @@
 """
-Author:         Jey Han Lau
-Date:           May 2013
+Created By:
+    Author:         Jey Han Lau
+    Date:           May 2013
+
+Updated By:
+    Author:         Durgesh Kumar
+    Date:           4th Nov 2019
+
+
 """
 
 import argparse
@@ -86,7 +93,7 @@ def update_word_count(word, worker_wordcount):
     worker_wordcount[word] = count
 
     if debug:
-        print "\tupdating word count for =", word
+        print("\tupdating word count for =", word)
 
 #update the word count given a pair of words
 def update_pair_word_count(w1, w2, topic_word_rel, worker_wordcount):
@@ -103,7 +110,7 @@ def get_ngrams(words, topic_word_rel):
     if debug:
         for word in words:
             if word > 0:
-                print word, "=", unigram_list[word-1]
+                print(word, "=", unigram_list[word-1])
 
     all_ngrams = []
     ngram = []
@@ -144,7 +151,7 @@ def calc_word_count(words, topic_word_rel, unigram_list, worker_wordcount):
     ngrams = get_ngrams(words, topic_word_rel)
 
     if debug:
-        print "\nngrams =", ngrams, "\n"
+        print("\nngrams =", ngrams, "\n")
 
     for ngram in ngrams:
         if (ngram in topic_word_rel):
@@ -153,7 +160,7 @@ def calc_word_count(words, topic_word_rel, unigram_list, worker_wordcount):
     for w1_id in range(0, len(ngrams)-1):
         for w2_id in range(w1_id+1, len(ngrams)):
             if debug:
-                print "\nChecking pair (", ngrams[w1_id], ",", ngrams[w2_id], ")"
+                print("\nChecking pair (", ngrams[w1_id], ",", ngrams[w2_id], ")")
             update_pair_word_count(ngrams[w1_id], ngrams[w2_id], topic_word_rel, worker_wordcount)
 
 #primary worker function called by main
@@ -169,9 +176,9 @@ def calcwcngram(worker_num, window_size, corpus_file, topic_word_rel, unigram_li
         words = convert_to_index(line, unigram_rev)
 
         if debug:
-            print "===================================================================="
-            print "line =", line
-            print "words =", " ".join([ str(item) for item in words])
+            print("====================================================================")
+            print("line =", line)
+            print("words =", " ".join([ str(item) for item in words]))
 
         i=0
         doc_len = len(words)
@@ -193,9 +200,9 @@ def calcwcngram(worker_num, window_size, corpus_file, topic_word_rel, unigram_li
                 words_in_window = words
 
             if debug:
-                print "========================="
-                print "line_num =", line_num
-                print "words_in_window =", " ".join([ str(item) for item in words_in_window ])
+                print("=========================")
+                print("line_num =", line_num)
+                print("words_in_window =", " ".join([ str(item) for item in words_in_window ]))
 
             calc_word_count(words_in_window, topic_word_rel, unigram_list, \
                 worker_wordcount)
@@ -226,7 +233,8 @@ def update_topic_word_rel(w1, w2):
 #main#
 ######
 #use utf-8 for stdout
-sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+# sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+
 
 #get the partitions of the reference corpus
 for f in os.listdir(args.ref_corpus_dir):
@@ -272,6 +280,10 @@ for i, cp in enumerate(corpus_partitions):
 po.close()
 po.join()
 
+word_count_items = list(word_count.items())
+word_count_items.sort()
+# print(word_count_items)
 #all done, print the word counts
-for tuple in sorted(word_count.items()):
-    print tuple[0] + "|" + str(tuple[1])
+for tuple in sorted(word_count_items):
+    # print(str(tuple[0]))
+    print(tuple[0] + "|" + str(tuple[1]))
