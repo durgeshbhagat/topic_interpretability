@@ -2,6 +2,12 @@ This package contains the scripts and various python tools for computing the sem
 interpretability of topics via: (1) the word intrusion task; (2) PMI/NPMI/LCP-based observed 
 coherence.
 
+Dependencies
+------------
+------------
+    - python 3.6 or higher
+    - numpy
+
 Updates
 =======
 * 2016-10-31: updated ComputeObservedCoherence to compute mean coherence over multiple top-N words; e.g. using option "-t 5 10 15 20" means it will compute coherence for top-5/10/15/20 words and then take the mean over the 4 values. Our latest study found that using multiple top-N words improves performance (see "The Sensitivity of Topic Coherence Evaluation to Topic Cardinality" in [Other Related Papers](#other-related-papers))
