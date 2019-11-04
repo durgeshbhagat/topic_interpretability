@@ -118,8 +118,8 @@ def normalize(val, min, max):
 
     result = (float(val) - float(min)) / (float(max) - float(min))
     if debug:
-        print "\n\t\tnormalizing: val =", val, " min =", min, " max =", max
-        print "\t\t\tresult =", result
+        print("\n\t\tnormalizing: val =", val, " min =", min, " max =", max)
+        print("\t\t\tresult =", result)
 
     return result
 
@@ -148,7 +148,7 @@ for line in wc_file:
             key = data[1] + "|" + data[0]
         wordcount[key] = int(data[2])
     else:
-        print "ERROR: wordcount format incorrect. Line =", line
+        print("ERROR: wordcount format incorrect. Line =", line)
         raise SystemExit
 
 #get the total number of windows
@@ -171,7 +171,7 @@ for i, topic_list in enumerate(topics):
     #calculate the cond probabilities
     for j, w1 in enumerate(topic_list):
         if debug:
-            print "\nword1 =", w1
+            print("\nword1 =", w1)
 
         for k, w2 in enumerate(topic_list):
             if j!= k:
@@ -183,8 +183,8 @@ for i, topic_list in enumerate(topics):
                 pmi_values.append(pmi[w1][w2])
            
                 if debug:
-                    print "\tword2 =", w2
-                    print "\t\ttype1 =", cp1[w1][w2], "\ttype2 =", cp2[w1][w2]
+                    print("\tword2 =", w2)
+                    print("\t\ttype1 =", cp1[w1][w2], "\ttype2 =", cp2[w1][w2])
 
     #print the topic features
     wordlist = [intruder_word]
@@ -201,14 +201,14 @@ for i, topic_list in enumerate(topics):
     cp2_max = max(cp2_values)
 
     if debug:
-        print "pmi_max =", pmi_max, "\tpmi_min =", pmi_min
-        print "condprob_type1_max =", cp1_max , "\tmin =", cp1_min
-        print "condprob_type2_max =", cp2_max, "\tmin =", cp2_min
+        print("pmi_max =", pmi_max, "\tpmi_min =", pmi_min)
+        print("condprob_type1_max =", cp1_max , "\tmin =", cp1_min)
+        print("condprob_type2_max =", cp2_max, "\tmin =", cp2_min)
 
     #print the features
     for target_word in wordlist:
-        print get_word_pos(intruder_word, target_word),
-        print "qid:" + str(i+1),
+        print(get_word_pos(intruder_word, target_word) ,   end = ' ' )
+        print("qid:" + str(i+1) , end = ' ')
         feature_id = 1
 
         #pmi, condprob features with other words
@@ -218,15 +218,15 @@ for i, topic_list in enumerate(topics):
                 continue
         
             if debug:
-                print "\n\nPair = (", target_word, topic_word, ")"
+                print("\n\nPair = (", target_word, topic_word, ")" )
 
             #pmi feature
             val = 0.0
             if target_word != topic_word:
                 val = normalize(pmi[topic_word][target_word], pmi_min, pmi_max)
             if debug:
-                print "#pmi(" + target_word + "," + topic_word + ")",
-            print str(feature_id) + ":" + str(val),
+                print("#pmi(" + target_word + "," + topic_word + ")", end =" ")
+            print(str(feature_id) + ":" + str(val), end=" ")
             feature_id += 1
 
             #cp1 feature
@@ -234,8 +234,8 @@ for i, topic_list in enumerate(topics):
             if target_word != topic_word:
                 val = normalize(cp1[target_word][topic_word], cp1_min, cp1_max)
             if debug:
-                print "#P(" + target_word + "|" + topic_word + ")",
-            print str(feature_id) + ":" + str(val),
+                print("#P(" + target_word + "|" + topic_word + ")", end = " ")
+            print(str(feature_id) + ":" + str(val), end = " ")
             feature_id += 1
 
             #cp2 feature
@@ -243,8 +243,8 @@ for i, topic_list in enumerate(topics):
             if target_word != topic_word:
                 val = normalize(cp2[target_word][topic_word], cp2_min, cp2_max)
             if debug:
-                    print "#P(" + topic_word + "|" + target_word + ")",
-            print(str(feature_id) + ":" + str(val),
+                    print("#P(" + topic_word + "|" + target_word + ")", end = " ")
+            print(str(feature_id) + ":" + str(val), end = " ")
             feature_id += 1
 
         #comment for the target word

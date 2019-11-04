@@ -13,7 +13,7 @@ Date:           Nov 10
 import sys
 
 if len(sys.argv) != 2:
-    print "Usage: SplitSVM.py <output_dir>"
+    print("Usage: SplitSVM.py <output_dir>")
     raise SystemExit
 
 #parameters
@@ -41,7 +41,7 @@ for line in sys.stdin:
             curr_grp.append(line)
             curr_qid = qid
     except:
-        print "Bad format for line =", line
+        print("Bad format for line =", line)
         raise SystemExit
 #append the last group
 if len(curr_grp) != 0:

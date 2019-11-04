@@ -45,7 +45,7 @@ qid_tw = defaultdict(list) #topic words for each qid
 #main#
 ######
 #use utf-8 for stdout
-sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+# sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 
 #process prediction file
 for line in predictions_file:
@@ -73,9 +73,9 @@ for (qid, line_ids) in sorted(qid_line_id.items()):
             ww_id = line_id
     
     if debug:
-        print ("[%.1f]" % hit), " ".join(qid_tw[qid])
-        print "\tSystem Chosen Intruder Word =", line_id_word[ww_id]
-        print "\tTrue Intruder Word =", line_id_word[line_ids[0]]
-        print
+        print("[{0:0.1f}]".format(hit), " ".join(qid_tw[qid]))
+        print("\tSystem Chosen Intruder Word =", line_id_word[ww_id])
+        print("\tTrue Intruder Word =", line_id_word[line_ids[0]])
+        print()
     else:
-        print hit
+        print(hit)
